@@ -2,8 +2,11 @@
 
 
 <details>
+  
   <summary>Google Cloud Platform Big Data and Machine Learning Fundamentals Course: Lab 1</summary>
+  
 ![](./img/BigDataMLFund01.png)
+
 </details>
 
 
