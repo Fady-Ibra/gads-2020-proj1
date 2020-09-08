@@ -44,3 +44,15 @@
   ![Google Cloud Platform Big Data and Machine Learning Fundamentals Course: Lab 5](./img/BigDataMLFund05.png)
 
 </details>
+
+
+------
+
+<details>
+  
+  <summary>Modernizing Data Lakes and Data Warehouses with GCP: Lab 1</summary>
+  
+  ![Modernizing Data Lakes and Data Warehouses with GCP: Lab 1](./img/ModernizingDataLakes_and_DataWarehous_withGCP01.png)
+
+</details>
+
