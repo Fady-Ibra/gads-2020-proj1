@@ -48,11 +48,53 @@
 
 ------
 
+
 <details>
   
   <summary>Modernizing Data Lakes and Data Warehouses with GCP: Lab 1</summary>
   
   ![Modernizing Data Lakes and Data Warehouses with GCP: Lab 1](./img/ModernizingDataLakes_and_DataWarehous_withGCP01.png)
+
+</details>
+
+
+<details>
+  
+  <summary>Modernizing Data Lakes and Data Warehouses with GCP: Lab 2</summary>
+  
+  ![Modernizing Data Lakes and Data Warehouses with GCP: Lab 2](./img/ModernizingDataLakes_and_DataWarehous_withGCP02.png)
+
+</details>
+
+
+
+<details>
+  
+  <summary>Modernizing Data Lakes and Data Warehouses with GCP: Lab 3</summary>
+  
+  ![Modernizing Data Lakes and Data Warehouses with GCP: Lab 3](./img/ModernizingDataLakes_and_DataWarehous_withGCP03.png)
+
+</details>
+
+
+
+<details>
+  
+  <summary>Modernizing Data Lakes and Data Warehouses with GCP: Lab 4</summary>
+  
+  ![Modernizing Data Lakes and Data Warehouses with GCP: Lab 4](./img/ModernizingDataLakes_and_DataWarehous_withGCP04.png)
+
+</details>
+
+
+------
+
+
+<details>
+  
+  <summary>Building Batch Data Pipelines on GCP: Lab 1</summary>
+  
+  ![Building Batch Data Pipelines on GCP: Lab 1](./img/BuildingBatchDataPipelines_onGCP01.png)
 
 </details>
 
