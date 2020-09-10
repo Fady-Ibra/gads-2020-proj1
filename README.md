@@ -141,13 +141,20 @@ gcloud compute instances create my-vm-2 \
 gcloud compute ssh --zone us-central1-b my-vm-2
 	
 	ping -c 2 my-vm-1
-	sudo ssh my-vm-1
-		sudo apt -y install nginx-light 
+	sudo su -
+	ssh my-vm-1
+		sudo su -
+		apt -y install nginx-light 
 		curl http://localhost/
-		sudo sed -i '/^<h1>.*/a Hello from Fady!' /var/www/html/index.nginx-debian.html
+		sed -i '/^<h1>.*/a Hello from Fady!' /var/www/html/index.nginx-debian.html
 		curl http://localhost/
 		exit
+		exit
 	curl http://my-vm-1/
+	exit
+	exit
+VM_IP=`gcloud compute instances describe my-vm-1 --zone us-central1-a --format 'get(networkInterfaces[0].accessConfigs[0].natIP)'`
+curl http://$VM_IP
   ```
 
 </details>
