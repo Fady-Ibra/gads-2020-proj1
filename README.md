@@ -98,3 +98,56 @@
 
 </details>
 
+
+------
+
+
+<details>
+  
+  <summary>Google Cloud Platform Fundamentals - Core Infrastructure: Lab 1</summary>
+  
+  ![Google Cloud Platform Fundamentals - Core Infrastructure: Lab 1](./img/BuildingBatchDataPipelines_onGCP01.png)
+
+</details>
+
+
+------
+  
+  
+## Translation labs
+
+<details>
+  
+  <summary>Translation labs Google Cloud Platform Fundamentals - Core Infrastructure: Lab 1</summary>
+  
+  ```
+gcloud config set project qwiklabs-gcp-02-2aa9aef9854f
+
+gcloud compute instances create my-vm-1 \
+	--zone=us-central1-a \
+	--image-project=debian-cloud \
+	--image=debian-9-stretch-v20200902 \
+	--tags=http-server 
+
+gcloud compute firewall-rules create default-allow-http \
+	--allow tcp:80 \
+	--target-tags http-server
+
+gcloud compute instances create my-vm-2 \
+	--zone=us-central1-b \
+	--image-project=debian-cloud \
+	--image=debian-9-stretch-v20200902 \
+
+gcloud compute ssh --zone us-central1-b my-vm-2
+	
+	ping -c 2 my-vm-1
+	sudo ssh my-vm-1
+		sudo apt -y install nginx-light 
+		curl http://localhost/
+		sudo sed -i '/^<h1>.*/a Hello from Fady!' /var/www/html/index.nginx-debian.html
+		curl http://localhost/
+		exit
+	curl http://my-vm-1/
+  ```
+
+</details>
