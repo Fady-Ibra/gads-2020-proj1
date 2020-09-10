@@ -118,7 +118,7 @@
 
 <details>
   
-  <summary>Translation labs Google Cloud Platform Fundamentals - Core Infrastructure: Lab GCP Fundamentals: Getting Started with Compute Engine</summary>
+  <summary>Lab Translation - GCP Fundamentals: Getting Started with Compute Engine</summary>
   
   ```
 gcloud config set project <WRITE_HERE_YOUR_PROJECT_ID>
@@ -162,8 +162,7 @@ curl http://$VM_IP
 
 <details>
   
-  <summary>Translation labs:: Google Cloud Platform Fundamentals - Core Infrastructure: Lab Google Cloud Fundamentals: Getting Started with Cloud Storage and Cloud SQL
-</summary>
+  <summary>Lab Translation - Google Cloud Fundamentals: Getting Started with Cloud Storage and Cloud SQL</summary>
   
   ```
 
