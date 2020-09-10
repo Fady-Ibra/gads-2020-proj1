@@ -106,7 +106,7 @@
   
   <summary>Google Cloud Platform Fundamentals - Core Infrastructure: Lab 1</summary>
   
-  ![Google Cloud Platform Fundamentals - Core Infrastructure: Lab 1](./img/BuildingBatchDataPipelines_onGCP01.png)
+  ![Google Cloud Platform Fundamentals - Core Infrastructure: Lab 1](./img/GCP_Fund-CoreInfra01.png)
 
 </details>
 
@@ -121,7 +121,7 @@
   <summary>Translation labs Google Cloud Platform Fundamentals - Core Infrastructure: Lab 1</summary>
   
   ```
-gcloud config set project qwiklabs-gcp-02-2aa9aef9854f
+gcloud config set project <WRITE_HERE_YOUR_PROJECT_ID>
 
 gcloud compute instances create my-vm-1 \
 	--zone=us-central1-a \
