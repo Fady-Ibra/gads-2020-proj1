@@ -118,7 +118,7 @@
 
 <details>
   
-  <summary>Translation labs Google Cloud Platform Fundamentals - Core Infrastructure: Lab 1</summary>
+  <summary>Translation labs Google Cloud Platform Fundamentals - Core Infrastructure: Lab GCP Fundamentals: Getting Started with Compute Engine</summary>
   
   ```
 gcloud config set project <WRITE_HERE_YOUR_PROJECT_ID>
@@ -155,6 +155,80 @@ gcloud compute ssh --zone us-central1-b my-vm-2
 	exit
 VM_IP=`gcloud compute instances describe my-vm-1 --zone us-central1-a --format 'get(networkInterfaces[0].accessConfigs[0].natIP)'`
 curl http://$VM_IP
+  ```
+
+</details>
+
+
+<details>
+  
+  <summary>Translation labs:: Google Cloud Platform Fundamentals - Core Infrastructure: Lab Google Cloud Fundamentals: Getting Started with Cloud Storage and Cloud SQL
+</summary>
+  
+  ```
+
+gcloud config set project <WRITE_HERE_YOUR_PROJECT_ID>
+
+gcloud compute instances create bloghost \
+	--zone us-central1-a \
+	--image-project debian-cloud \
+	--image debian-9-stretch-v20200902 \
+	--tags http-server \
+	--metadata startup-script=apt\ update$'\n'apt\ -y\ install\ apache2\ php\ php-mysql$'\n'service\ apache2\ restart 
+
+gcloud compute firewall-rules create default-allow-http \
+	--allow tcp:80 \
+	--target-tags http-server
+
+gsutil mb gs://$DEVSHELL_PROJECT_ID
+gsutil cp gs://cloud-training/gcpfci/my-excellent-blog.png gs://$DEVSHELL_PROJECT_ID/my-excellent-blog.png
+gsutil acl ch -u allUsers:R gs://$DEVSHELL_PROJECT_ID/my-excellent-blog.png
+
+VM_IP=`gcloud compute instances describe bloghost --zone us-central1-a --format 'get(networkInterfaces[0].accessConfigs[0].natIP)'`
+
+gcloud sql instances create blog-db --region us-central1
+
+gcloud sql users set-password root \
+	--instance blog-db \
+	--host % \
+	--prompt-for-password
+
+gcloud sql users create blogdbuser \
+	--instance blog-db \
+	--host $VM_IP \
+	--password blogdbuser
+
+gcloud sql instances patch blog-db --authorized-networks $VM_IP/32
+
+gcloud compute ssh --zone us-central1-a bloghost
+
+sudo su -
+
+sudo cat << EOF > /var/www/html/index.php
+<html>
+<head><title>Welcome to my excellent blog</title></head>
+<body>
+<h1>Welcome to my excellent blog</h1>
+<?php
+\$dbserver = "<WRITE_HERE_YOUR_CLOUD_SQL_IP>";
+\$dbuser = "blogdbuser";
+\$dbpassword = "blogdbuser";
+\$conn = new mysqli(\$dbserver, \$dbuser, \$dbpassword);
+if (mysqli_connect_error()) {
+echo ("Database connection failed: " . mysqli_connect_error());
+} else {
+echo ("Database connection succeeded.");
+}
+?>
+</body>
+</html>
+EOF
+
+service apache2 restart
+
+sed -i '/^<h1>.*/i <img src="https://storage.googleapis.com/<WRITE_HERE_YOUR_PROJECT_ID>/my-excellent-blog.png">' /var/www/html/index.php
+
+service apache2 restart
   ```
 
 </details>
