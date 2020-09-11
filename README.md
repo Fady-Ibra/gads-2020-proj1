@@ -124,35 +124,35 @@
 gcloud config set project <WRITE_HERE_YOUR_PROJECT_ID>
 
 gcloud compute instances create my-vm-1 \
-	--zone=us-central1-a \
-	--image-project=debian-cloud \
-	--image=debian-9-stretch-v20200902 \
-	--tags=http-server 
+	--zone us-central1-a \
+	--image-project debian-cloud \
+	--image debian-9-stretch-v20200902 \
+	--tags http-server 
 
 gcloud compute firewall-rules create default-allow-http \
 	--allow tcp:80 \
 	--target-tags http-server
 
 gcloud compute instances create my-vm-2 \
-	--zone=us-central1-b \
-	--image-project=debian-cloud \
-	--image=debian-9-stretch-v20200902 \
+	--zone us-central1-b \
+	--image-project debian-cloud \
+	--image debian-9-stretch-v20200902 
 
-gcloud compute ssh --zone us-central1-b my-vm-2
-	
+gcloud compute ssh my-vm-2 --zone us-central1-b 	
 	ping -c 2 my-vm-1
-	sudo su -
-	ssh my-vm-1
-		sudo su -
-		apt -y install nginx-light 
-		curl http://localhost/
-		sed -i '/^<h1>.*/a Hello from Fady!' /var/www/html/index.nginx-debian.html
-		curl http://localhost/
-		exit
-		exit
+	exit
+	
+gcloud compute ssh my-vm-1 --zone us-central1-a
+	sudo apt install -y nginx-light 
+	curl http://localhost/
+	sudo sed -i '/^<h1>.*/a Hello from Fady!' /var/www/html/index.nginx-debian.html
+	curl http://localhost/
+	exit
+	
+gcloud compute ssh my-vm-2 --zone us-central1-b 	
 	curl http://my-vm-1/
 	exit
-	exit
+	
 VM_IP=`gcloud compute instances describe my-vm-1 --zone us-central1-a --format 'get(networkInterfaces[0].accessConfigs[0].natIP)'`
 curl http://$VM_IP
   ```
