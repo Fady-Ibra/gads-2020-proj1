@@ -173,7 +173,7 @@ gcloud compute instances create bloghost \
 	--image-project debian-cloud \
 	--image debian-9-stretch-v20200902 \
 	--tags http-server \
-	--metadata startup-script=apt\ update$'\n'apt\ -y\ install\ apache2\ php\ php-mysql$'\n'service\ apache2\ restart 
+	--metadata startup-script=apt\ update$'\n'apt\ install\ -y\ apache2\ php\ php-mysql$'\n'service\ apache2\ restart 
 
 gcloud compute firewall-rules create default-allow-http \
 	--allow tcp:80 \
@@ -183,7 +183,7 @@ gsutil mb gs://$DEVSHELL_PROJECT_ID
 gsutil cp gs://cloud-training/gcpfci/my-excellent-blog.png gs://$DEVSHELL_PROJECT_ID/my-excellent-blog.png
 gsutil acl ch -u allUsers:R gs://$DEVSHELL_PROJECT_ID/my-excellent-blog.png
 
-VM_IP=`gcloud compute instances describe bloghost --zone us-central1-a --format 'get(networkInterfaces[0].accessConfigs[0].natIP)'`
+export VM_IP=`gcloud compute instances describe bloghost --zone us-central1-a --format 'get(networkInterfaces[0].accessConfigs[0].natIP)'`
 
 gcloud sql instances create blog-db --region us-central1
 
@@ -199,17 +199,15 @@ gcloud sql users create blogdbuser \
 
 gcloud sql instances patch blog-db --authorized-networks $VM_IP/32
 
-gcloud compute ssh --zone us-central1-a bloghost
+export DB_IP=`gcloud sql instances describe blog-db --format 'get(ipAddresses[0].ipAddress)'`
 
-sudo su -
-
-sudo cat << EOF > /var/www/html/index.php
+cat << EOF > index.php
 <html>
 <head><title>Welcome to my excellent blog</title></head>
 <body>
 <h1>Welcome to my excellent blog</h1>
 <?php
-\$dbserver = "<WRITE_HERE_YOUR_CLOUD_SQL_IP>";
+\$dbserver = $DB_IP;
 \$dbuser = "blogdbuser";
 \$dbpassword = "blogdbuser";
 \$conn = new mysqli(\$dbserver, \$dbuser, \$dbpassword);
@@ -223,11 +221,16 @@ echo ("Database connection succeeded.");
 </html>
 EOF
 
-service apache2 restart
+sed -i '/^<h1>.*/i <img src="https://storage.googleapis.com/'"$DEVSHELL_PROJECT_ID"'/my-excellent-blog.png">' index.php
 
-sed -i '/^<h1>.*/i <img src="https://storage.googleapis.com/<WRITE_HERE_YOUR_PROJECT_ID>/my-excellent-blog.png">' /var/www/html/index.php
+cat index.php 
 
-service apache2 restart
+gcloud compute scp index.php bloghost:~/index.php --zone us-central1-a
+
+gcloud compute ssh bloghost --zone us-central1-a 
+	sudo cp index.php /var/www/html/index.php
+	service apache2 restart
+
   ```
 
 </details>
